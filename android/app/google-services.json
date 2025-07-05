@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "9039114320",
+    "firebase_url": "https://pharmas-f8951-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "pharmas-f8951",
+    "storage_bucket": "pharmas-f8951.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9039114320:android:7e1f30698699fbed87e155",
+        "android_client_info": {
+          "package_name": "com.example.pharmacietest1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCpExSt9C7I086Flu6ZjmA3owLLMTQFsg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
