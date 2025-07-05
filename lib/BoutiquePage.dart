@@ -20,7 +20,8 @@ class _BoutiquePageState extends State<BoutiquePage> {
     'Lotion',
     'Sirop',
     'Complément',
-    'Hygiène'
+    'Hygiène',
+    'Médicament'
   ];
 
   @override
@@ -52,6 +53,8 @@ class _BoutiquePageState extends State<BoutiquePage> {
         return 'supplement'.tr();
       case 'Hygiène':
         return 'hygiene'.tr();
+      case 'Médicament':
+        return 'medicine'.tr();
       default:
         return cat;
     }

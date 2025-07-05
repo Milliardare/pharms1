@@ -234,67 +234,106 @@ class _ClientPharmacyListState extends State<ClientPharmacyList>
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: Text(p['name']),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  p['imagePath'],
-                  width: 120,
-                  height: 120,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(height: 12),
-              Row(
-                children: [
-                  Icon(Icons.location_on, color: Colors.green),
-                  SizedBox(width: 9),
-                  Expanded(child: Text(p['location'])),
-                ],
-              ),
-              if (p['openHour'] != '' && p['closeHour'] != '')
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.access_time, color: Colors.green),
-                      SizedBox(width: 6),
-                      Text(
-                        tr('open_hours'.tr(),
-                            args: [p['openHour'], p['closeHour']]),
-                      ),
-                    ],
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(
+                    p['imagePath'],
+                    width: 120,
+                    height: 120,
+                    fit: BoxFit.cover,
                   ),
                 ),
-              SizedBox(height: 12),
-              ElevatedButton.icon(
-                icon: Icon(Icons.chat),
-                label: Text('order_medicine'.tr()),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green.shade600,
-                  minimumSize: Size(double.infinity, 48),
+                SizedBox(height: 12),
+                Row(
+                  children: [
+                    Icon(Icons.location_on, color: Colors.green),
+                    SizedBox(width: 9),
+                    Expanded(child: Text(p['location'])),
+                  ],
                 ),
-                onPressed: () async {
-                  final number =
-                      p['phone'].toString().replaceAll(RegExp(r'[ +\-]'), '');
-                  final message = Uri.encodeComponent(
-                    "Bonjour ${p['name']}, je m'appelle ...., je voudrais commander un médicament.",
-                  );
-                  final url = 'https://wa.me/$number?text=$message';
-
-                  if (await canLaunchUrl(Uri.parse(url))) {
-                    await launchUrl(Uri.parse(url),
-                        mode: LaunchMode.externalApplication);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('whatsapp_error'.tr())),
+                if (p['openHour'] != '' && p['closeHour'] != '')
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
+                    child: Row(
+                      children: [
+                           Icon(Icons.access_time, color: Colors.green),
+                          SizedBox(width: 6),
+                          Expanded(
+                        child: Text(
+                              tr(
+                              'open_hours',
+                              namedArgs: {
+                                'open': p['openHour'],
+                                'close': p['closeHour'],
+                                },
+                                  ),
+                                ),
+                                ),
+                             ],
+                      //   Icon(Icons.access_time, color: Colors.green),
+                      //   SizedBox(width: 6),
+                      //   Text(
+                      //     tr('open_hours'.tr(),
+                      //         args: [p['openHour'], p['closeHour']]),
+                      //   ),
+                      // ],
+                    ),
+                  ),
+                SizedBox(height: 12),
+                ElevatedButton.icon(
+                  icon: Icon(Icons.chat),
+                  label: Text('order_medicine'.tr()),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green.shade600,
+                    minimumSize: Size(double.infinity, 48),
+                  ),
+                  onPressed: () async {
+                    final number =
+                        p['phone'].toString().replaceAll(RegExp(r'[ +\-]'), '');
+                    final message = Uri.encodeComponent(
+                      "Bonjour ${p['name']}, je m'appelle ...., je voudrais commander un médicament.",
                     );
-                  }
-                },
-              ),
-            ],
+                    final url = 'https://wa.me/$number?text=$message';
+
+                    if (await canLaunchUrl(Uri.parse(url))) {
+                      await launchUrl(Uri.parse(url),
+                          mode: LaunchMode.externalApplication);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('whatsapp_error'.tr())),
+                      );
+                    }
+                  },
+                ),
+                SizedBox(height: 9),
+                ElevatedButton.icon(
+                  icon: Icon(Icons.call),
+                  label: Text('call'.tr()),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue.shade600,
+                    minimumSize: Size(double.infinity, 36),
+                  ),
+                  onPressed: () async {
+                    final number =
+                        p['phone'].toString().replaceAll(RegExp(r'[^\d]'), '');
+                    final url = 'tel:$number';
+
+                    if (await canLaunchUrl(Uri.parse(url))) {
+                      await launchUrl(Uri.parse(url),
+                          mode: LaunchMode.externalApplication);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('call_error'.tr())),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -314,13 +353,13 @@ class _ClientPharmacyListState extends State<ClientPharmacyList>
 
 
 
+
 // import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:url_launcher/url_launcher.dart';
 // import 'OrderFormPage.dart';
 // import 'BoutiquePage.dart';
 // import 'package:easy_localization/easy_localization.dart';
-
 
 // class ClientPharmacyList extends StatefulWidget {
 //   @override
@@ -357,7 +396,7 @@ class _ClientPharmacyListState extends State<ClientPharmacyList>
 //           'phone': data['phone'] ?? '',
 //           'imagePath': 'assets/images/pharmasfemme.png',
 //           'location': data['location'] ?? '',
-//            'openHour': data['openHour'] ?? '',
+//           'openHour': data['openHour'] ?? '',
 //           'closeHour': data['closeHour'] ?? '',
 //         };
 //       }).toList();
@@ -369,7 +408,7 @@ class _ClientPharmacyListState extends State<ClientPharmacyList>
 //       });
 //     } catch (e) {
 //       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text("Erreur de chargement des pharmacies.")),
+//         SnackBar(content: Text('error_loading_pharmacies'.tr())),
 //       );
 //     }
 //   }
@@ -426,7 +465,7 @@ class _ClientPharmacyListState extends State<ClientPharmacyList>
 //                 : filteredPharmacies.isEmpty
 //                     ? Center(
 //                         child: Text(
-//                          'no_pharmacies_found'.tr(),
+//                           'no_pharmacies_found'.tr(),
 //                           style: TextStyle(color: Colors.grey),
 //                           textAlign: TextAlign.center,
 //                         ),
@@ -442,7 +481,11 @@ class _ClientPharmacyListState extends State<ClientPharmacyList>
 //                               end: Offset(0, 0),
 //                             ).animate(CurvedAnimation(
 //                               parent: _controller,
-//                               curve: Interval((index / filteredPharmacies.length), 1.0, curve: Curves.easeOut),
+//                               curve: Interval(
+//                                 (index / filteredPharmacies.length),
+//                                 1.0,
+//                                 curve: Curves.easeOut,
+//                               ),
 //                             )),
 //                             child: FadeTransition(
 //                               opacity: _controller,
@@ -465,7 +508,9 @@ class _ClientPharmacyListState extends State<ClientPharmacyList>
 //                                   ),
 //                                   title: Text(
 //                                     p['name'],
-//                                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+//                                     style: TextStyle(
+//                                         fontWeight: FontWeight.w600,
+//                                         fontSize: 16),
 //                                   ),
 //                                   subtitle: Text(p['location']),
 //                                   onTap: () {
@@ -483,59 +528,56 @@ class _ClientPharmacyListState extends State<ClientPharmacyList>
 //       bottomNavigationBar: Padding(
 //         padding: const EdgeInsets.all(16.0),
 //         child: Row(
-//     children: [
-//       // 🟩 BOUTIQUE
-//       Expanded(
-//         child: ElevatedButton.icon(
-//           icon: Icon(Icons.storefront),
-//           label: Text('boutique'.tr()),
-//           style: ElevatedButton.styleFrom(
-//             backgroundColor: const Color.fromARGB(255, 58, 152, 230),
-//             padding: EdgeInsets.symmetric(vertical: 14),
-//             shape: RoundedRectangleBorder(
-//               borderRadius: BorderRadius.circular(12),
+//           children: [
+//             // 🟩 BOUTIQUE
+//             Expanded(
+//               child: ElevatedButton.icon(
+//                 icon: Icon(Icons.storefront),
+//                 label: Text('boutique'.tr()),
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: const Color.fromARGB(255, 58, 152, 230),
+//                   padding: EdgeInsets.symmetric(vertical: 14),
+//                   shape: RoundedRectangleBorder(
+//                     borderRadius: BorderRadius.circular(12),
+//                   ),
+//                 ),
+//                 onPressed: () {
+//                   Navigator.push(
+//                     context,
+//                     MaterialPageRoute(builder: (context) => BoutiquePage()),
+//                   );
+//                   ScaffoldMessenger.of(context).showSnackBar(
+//                     SnackBar(content: Text('boutique_coming_soon'.tr())),
+//                   );
+//                 },
+//               ),
 //             ),
-//           ),
-//           onPressed: () {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(builder: (context) => BoutiquePage()),
-//             );
-//             // TODO: rediriger vers la boutique (ex: page boutique)
-//             ScaffoldMessenger.of(context).showSnackBar(
-//               SnackBar(content: Text('boutique_coming_soon'.tr())),
-//             );
-//           },
-//         ),
-//       ),
-//       SizedBox(width: 12),
-//       // 🟥 CONFIRMER
-//       Expanded(
-//         child: ElevatedButton.icon(
-//           icon: Icon(Icons.local_shipping),
-//           label: Text(
-//             "Livraison",
-//             style: TextStyle(fontSize: 16),
-//           ),
-//           style: ElevatedButton.styleFrom(
-//             backgroundColor: Color.fromARGB(255, 253, 147, 147),
-//             padding: EdgeInsets.symmetric(vertical: 14),
-//             shape: RoundedRectangleBorder(
-//               borderRadius: BorderRadius.circular(12),
+//             SizedBox(width: 12),
+//             // 🟥 LIVRAISON
+//             Expanded(
+//               child: ElevatedButton.icon(
+//                 icon: Icon(Icons.local_shipping),
+//                 label: Text(
+//                   'delivery'.tr(),
+//                   style: TextStyle(fontSize: 16),
+//                 ),
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: Color.fromARGB(255, 253, 147, 147),
+//                   padding: EdgeInsets.symmetric(vertical: 14),
+//                   shape: RoundedRectangleBorder(
+//                     borderRadius: BorderRadius.circular(12),
+//                   ),
+//                 ),
+//                 onPressed: () {
+//                   Navigator.push(
+//                     context,
+//                     MaterialPageRoute(builder: (context) => OrderFormPage()),
+//                   );
+//                 },
+//               ),
 //             ),
-//           ),
-//           onPressed: () {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(builder: (context) => OrderFormPage()),
-//             );
-//           },
+//           ],
 //         ),
-//       ),
-//     ],
-//   ),
-
-        
 //       ),
 //     );
 //   }
@@ -545,7 +587,8 @@ class _ClientPharmacyListState extends State<ClientPharmacyList>
 //       context: context,
 //       builder: (BuildContext context) {
 //         return AlertDialog(
-//           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+//           shape:
+//               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
 //           title: Text(p['name']),
 //           content: Column(
 //             mainAxisSize: MainAxisSize.min,
@@ -568,39 +611,41 @@ class _ClientPharmacyListState extends State<ClientPharmacyList>
 //                 ],
 //               ),
 //               if (p['openHour'] != '' && p['closeHour'] != '')
-//              Padding(
-//                padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
-//              child: Row(
-//               children: [
-//              Icon(Icons.access_time, color: Colors.green),
-//              SizedBox(width: 6),
-//               Text("Ouvert de ${p['openHour']} à ${p['closeHour']}"),
-//             ],
-//              ),
-//              ),
-
-               
-
+//                 Padding(
+//                   padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
+//                   child: Row(
+//                     children: [
+//                       Icon(Icons.access_time, color: Colors.green),
+//                       SizedBox(width: 6),
+//                       Text(
+//                         tr('open_hours'.tr(),
+//                             args: [p['openHour'], p['closeHour']]),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
 //               SizedBox(height: 12),
 //               ElevatedButton.icon(
 //                 icon: Icon(Icons.chat),
-//                 label: Text("Contacter sur WhatsApp"),
+//                 label: Text('order_medicine'.tr()),
 //                 style: ElevatedButton.styleFrom(
 //                   backgroundColor: Colors.green.shade600,
 //                   minimumSize: Size(double.infinity, 48),
 //                 ),
 //                 onPressed: () async {
-//                   final number = p['phone'].toString().replaceAll(RegExp(r'[ +\-]'), '');
+//                   final number =
+//                       p['phone'].toString().replaceAll(RegExp(r'[ +\-]'), '');
 //                   final message = Uri.encodeComponent(
 //                     "Bonjour ${p['name']}, je m'appelle ...., je voudrais commander un médicament.",
 //                   );
 //                   final url = 'https://wa.me/$number?text=$message';
 
 //                   if (await canLaunchUrl(Uri.parse(url))) {
-//                     await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+//                     await launchUrl(Uri.parse(url),
+//                         mode: LaunchMode.externalApplication);
 //                   } else {
 //                     ScaffoldMessenger.of(context).showSnackBar(
-//                       SnackBar(content: Text("Impossible d'ouvrir WhatsApp")),
+//                       SnackBar(content: Text('whatsapp_error'.tr())),
 //                     );
 //                   }
 //                 },
@@ -610,13 +655,17 @@ class _ClientPharmacyListState extends State<ClientPharmacyList>
 //           actions: [
 //             TextButton(
 //               onPressed: () => Navigator.of(context).pop(),
-//               child: Text("Fermer", style: TextStyle(color: Colors.red)),
+//               child: Text(
+//                 'close'.tr(),
+//                 style: TextStyle(color: Colors.red),
+//               ),
 //             ),
 //           ],
 //         );
 //       },
 //     );
 //   }
-// }
 
+// }
+ 
 

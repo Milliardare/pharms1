@@ -35,13 +35,15 @@
     "error_already_registered_msg": "This user is already registered with the role \"{}\".",
    
     "password_mismatch": "Passwords do not match.",
+    
     "loading": "Loading...",
-
+ 
     "pharmacy_space2": "Pharmacy Space",
   "delivery_space2": "Delivery Space",
   "about2": "About",
+  "medicine": "Medicine",
   "more2": "More",
-
+  "call_error": "Unable to make the call.",
   "contact2": "Contact",
   "access_denied_title2": "Access Denied",
   "access_denied_msg2": "You are not authorized to access this section.",

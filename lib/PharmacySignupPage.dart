@@ -125,10 +125,21 @@ class _PharmacySignupPageState extends State<PharmacySignupPage> {
               ),
               SizedBox(height: 12),
               TextFormField(
-                controller: phoneCtrl,
-                decoration: InputDecoration(labelText: 'Phone / WhatsApp', border: OutlineInputBorder()),
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                validator: (v) => v!.isEmpty ? 'Enter a phone number' : null,
+                  controller: phoneCtrl,
+                 decoration: InputDecoration(
+                   labelText: 'Phone / WhatsApp',
+                  border: OutlineInputBorder(),
+                  prefixText: '+', // juste le + fixe
+                  ),
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: [
+                     FilteringTextInputFormatter.allow(RegExp(r'[0-9]')), // chiffres uniquement
+                       ],
+                   validator: (v) => v!.isEmpty ? 'Enter a phone number' : null,
+                // controller: phoneCtrl,
+                // decoration: InputDecoration(labelText: 'Phone / WhatsApp', border: OutlineInputBorder()),
+                // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                // validator: (v) => v!.isEmpty ? 'Enter a phone number' : null,
               ),
               SizedBox(height: 12),
               TextFormField(

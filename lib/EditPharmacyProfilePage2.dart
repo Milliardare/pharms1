@@ -106,6 +106,14 @@ class _EditPharmacyProfilePageState extends State<EditPharmacyProfilePage2> {
                     ),
                     SizedBox(height: 10),
                     TextFormField(
+
+                      //   controller: phoneCtrl,
+                      // decoration: InputDecoration(
+                      //   labelText: 'phone'.tr(),
+                      //   // prefixText: '+241 ', // Exemple indicatif Gabon
+                      //    ),
+                      //    keyboardType: TextInputType.phone,
+                      //   validator: (v) => v!.isEmpty ? 'enter_phone'.tr() : null,
                       controller: phoneCtrl,
                       decoration: InputDecoration(labelText: 'phone'.tr()),
                       validator: (v) => v!.isEmpty ? 'enter_phone'.tr() : null,

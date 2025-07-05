@@ -59,6 +59,7 @@
     "whatsapp_error": "Impossible d'ouvrir WhatsApp",
     "close": "Fermer",
     "open_hours": "Ouvert de {open} à {close}",
+    "call_error": "Impossible de passer l’appel.",
 
 
    
@@ -102,11 +103,13 @@
         "confirm_order": "Confirmer la commande de livraison",
         "boutique_title": "Bienvenue dans Boutique Pharmas",
         "search_product_hint": "Rechercher un produit...",
+      
         "all": "Toutes",
         "cream": "Crème",
         "lotion": "Lotion",
         "syrup": "Sirop",
         "supplement": "Complément",
+        "medicine": "Médicament",
         "hygiene": "Hygiène",
         "no_products": "Aucun produit disponible, vérifiez votre connexion",
         "whatsapp_not_defined": "Numéro WhatsApp non défini",

@@ -22,7 +22,7 @@ class _AjouterProduitPageState extends State<AjouterProduitPage> {
   // 🔥 Ajout du champ Catégorie
   String? _selectedCategorie;
   final List<String> _categories = [
-    'Crème', 'Lotion', 'Sirop', 'Complément', 'Hygiène'
+    'Crème', 'Lotion', 'Sirop', 'Complément', 'Hygiène','Médicament',
   ];
 
   Future<void> _pickImage() async {
