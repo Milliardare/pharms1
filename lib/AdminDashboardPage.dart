@@ -6,7 +6,7 @@ import 'AdminDeleteLivreurPage.dart';
 import 'AdminDeletePharmacyPage.dart';
 import 'SupprimerProduitPage.dart';
 import 'ModifierNumeroWhatsAppPage.dart';
-
+import 'PharmacyDataUploaderPage.dart';
 class AdminDashboardPage extends StatelessWidget {
   const AdminDashboardPage({super.key});
 
@@ -114,6 +114,18 @@ class AdminDashboardPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => AdminDeletePharmacyPage()),
+                  );
+                },
+              ),
+               const SizedBox(height: 24),
+              _buildButton(
+                icon: Icons.local_pharmacy_outlined,
+                label: 'ajouter plusieurs pharmacies',
+                backgroundColor: greenColor,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => PharmacyDataUploaderPage()),
                   );
                 },
               ),
